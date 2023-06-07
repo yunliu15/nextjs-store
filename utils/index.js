@@ -10,3 +10,7 @@ export async function storefront(query, variables = {}) {
     
     return response.json();
 }
+
+export function formatPrice(number) {
+    return Intl.NumberFormat("en-AU", {style: "currency", currency: "AUD", minimumFractionDigits: 2}).format(number);
+}
