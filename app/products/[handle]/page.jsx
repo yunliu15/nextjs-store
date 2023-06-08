@@ -3,7 +3,6 @@ import ProductDetails from './components/ProductDetails';
 
 export default async function Product({ params: {handle}}) {
     const product = await getProduct(handle);
-    console.log(product);
     const image = product.images.edges[0]?.node;
   return (
     <main className="mx-auto pt-14 px-4 sm:pt-24 sm: px-6 lg:max-w-7x1 lg:px-8">
@@ -20,7 +19,7 @@ export default async function Product({ params: {handle}}) {
             </div>
 
             {/* product details */}
-            <ProductDetails product={product} />
+            <ProductDetails product={product} handle={handle}/>
         </div>
     </main>
   )

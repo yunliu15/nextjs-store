@@ -108,6 +108,5 @@ export async function getProduct(handle) {
           }
         `
     );
-    console.log(data)
     return data.productByHandle;
 }

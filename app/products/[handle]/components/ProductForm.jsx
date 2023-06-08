@@ -1,10 +1,13 @@
 "use client"
 
 import { useState } from 'react';
+import { useCartContext, useAddToCartContext } from '@/context/Store';
 
-function ProductForm({ variants, setVariantPrice }) {
+function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
   const [variantId, setVariantId] = useState(variants[0].node.id);
   const [quantity, setQuantity] = useState(1);
+  const addToCart = useAddToCartContext();
+  const isLoading = useCartContext()[2];
 
   const handleVariantChange = (e) => {
     setVariantId(e);
@@ -19,6 +22,22 @@ function ProductForm({ variants, setVariantPrice }) {
       setQuantity(1);
     } else {
       setQuantity(Math.floor(qty));
+    }
+  }
+
+  async function handleAddToCart() {
+    const variant = variants.find(v => v.node.id === variantId);
+    // update store context
+    if (quantity !== '') {
+      addToCart({
+        productTitle: title,
+        productHandle: handle,
+        productImage: mainImg,
+        variantId: variantId,
+        variantPrice: variant.node.price.amount,
+        variantTitle: variant.node.title,
+        variantQuantity: quantity
+      })
     }
   }
 
@@ -62,7 +81,14 @@ function ProductForm({ variants, setVariantPrice }) {
             className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
           />
         </div>
-        
+        <button
+          className="w-full bg-gray-900 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-500"
+          aria-label="cart-button"
+          onClick={handleAddToCart}
+          disabled={isLoading? true : false}
+        >
+          Add To Cart         
+        </button>
       </div>
       
     </div>
