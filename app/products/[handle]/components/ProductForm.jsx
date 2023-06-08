@@ -4,17 +4,12 @@ import { useState } from 'react';
 
 function ProductForm({ variants, setVariantPrice }) {
   const [variantId, setVariantId] = useState(variants[0].node.id);
-  const [variant, setVariant] = useState(variants[0]);
   const [quantity, setQuantity] = useState(1);
 
   const handleVariantChange = (e) => {
     setVariantId(e);
-    // send back change
     const selectedVariant = variants.find(v => v.node.id === e);
     setVariantPrice(selectedVariant.node.price.amount);
-
-    // update variant
-    setVariant(selectedVariant);
   }
  
   const updateQuantity = (qty) => {
@@ -44,8 +39,9 @@ function ProductForm({ variants, setVariantPrice }) {
                   id={item.node.id}
                   key={item.node.id}
                   value={item.node.id}
+                  disabled={item.node.availableForSale? false : true}
                 >
-                  {item.node.title}
+                  {item.node.title}{item.node.availableForSale? '' : ' (out of stock)'}
                 </option>
               ))
             }

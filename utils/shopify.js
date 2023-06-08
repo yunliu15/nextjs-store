@@ -89,7 +89,7 @@ export async function getProduct(handle) {
                   node {
                     id
                     title
-                    sku
+                    availableForSale
                     price {
                         amount
                     }
