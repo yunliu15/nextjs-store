@@ -6,12 +6,13 @@ import { getCartSubTotal } from '@/utils/checkout-helpers';
 import {formatPrice} from '@/utils/shopify'
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Popover } from '@headlessui/react';
 
 export default function Minicart() {
     const updateCartQuantity = useUpdateCartQuantityContext();
     const cart = useCartContext()[0];
+    const checkoutUrl = useCartContext()[1];
     const subtotal = getCartSubTotal(cart);
     console.log(cart);
     let numItems = 0
@@ -20,7 +21,9 @@ export default function Minicart() {
     })
 
     function updateItem(id, quantity) {
-        updateCartQuantity(id, quantity)
+        if (quantity != '' && quantity > 0) {            
+            updateCartQuantity(id, quantity)
+        }
     }
     
     return (
@@ -42,11 +45,11 @@ export default function Minicart() {
                 </div>
                 </Popover.Button>
 
-                <Popover.Panel className="absolute z-10">
+                <Popover.Panel className="bg-white absolute z-10">
                     <div>
                         Subtotal: {formatPrice(subtotal)}
                     </div>
-                    <ul className='bg-white p-3'>
+                    <ul className='p-3'>
                         
                         {
                             cart.map((item, index) => {
@@ -55,7 +58,15 @@ export default function Minicart() {
                                         <h3>{item.productTitle}</h3>
                                         <p>{item.variantTitle}</p>
                                         <p>{formatPrice(item.variantPrice)}</p>
-                                        <p>{item.variantQuantity}</p>
+                                        <input 
+                                        name='qty'
+                                        type='number'
+                                        min="1"
+                                        step="1"
+                                        value={item.variantQuantity}
+                                        onChange={e => updateItem(item.variantId, e.target.value)}
+                                        className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                                        />
                                         <button
                                         aria-label="delete-item"
                                         className=""
@@ -68,6 +79,15 @@ export default function Minicart() {
                             })
                         }
                     </ul>
+                    <Link
+                    href={checkoutUrl}
+                    aria-label="checkout-products"
+                    className="bg-gray-900 text-white text-lg font-primary font-semibold pt-2 pb-1 leading-relaxed flex 
+                    justify-center items-center focus:ring-1 focus:ring-palette-light focus:outline-none w-full hover:bg-palette-dark rounded-sm"
+                    >
+                    Check Out
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 ml-2 inline-flex" />
+                    </Link>
                 </Popover.Panel>
             </Popover>
             
