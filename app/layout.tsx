@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { CartProvider } from '@/context/Store';
-import Minicart from './components/minicart';
+import Minicart from './components/Minicart';
 
 const inter = Inter({ subsets: ['latin'] })
 
