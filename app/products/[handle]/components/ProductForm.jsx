@@ -3,22 +3,29 @@
 import { useState } from 'react';
 
 function ProductForm({ variants, setVariantPrice }) {
-  const [variantId, setVariantId] = useState(variants[0].node.id)
-  const [variant, setVariant] = useState(variants[0])
+  const [variantId, setVariantId] = useState(variants[0].node.id);
+  const [variant, setVariant] = useState(variants[0]);
+  const [quantity, setQuantity] = useState(1);
 
-  
-
-  function handleVariantChange(e) {
-    setVariantId(e)
+  const handleVariantChange = (e) => {
+    setVariantId(e);
     // send back change
     const selectedVariant = variants.find(v => v.node.id === e);
-    setVariantPrice(selectedVariant.node.price.amount)
+    setVariantPrice(selectedVariant.node.price.amount);
 
     // update variant
-    setVariant(selectedVariant)
+    setVariant(selectedVariant);
   }
-
-  
+ 
+  const updateQuantity = (qty) => {
+    if (qty === '') {
+      setQuantity('');
+    } else if (qty < 1) {
+      setQuantity(1);
+    } else {
+      setQuantity(Math.floor(qty));
+    }
+  }
 
   return (
     <div className="w-full">
@@ -54,7 +61,8 @@ function ProductForm({ variants, setVariantPrice }) {
             name="quantity"
             min="1"
             step="1"
-            
+            value={quantity}
+            onChange={(e) => updateQuantity(e.target.value)}
             className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
           />
         </div>
