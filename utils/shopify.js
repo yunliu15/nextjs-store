@@ -16,7 +16,8 @@ export async function storefront(query, variables = {}) {
         return response.json();
 
     } catch (err) {
-        throw new Error(err.message);
+        console.log(err.message);
+        throw new Error('err.message');
     }
 }
 
@@ -78,14 +79,21 @@ export async function getAllProductsSlugs() {
 export async function getProduct(handle) {
     const {data} = await storefront(
         `
-        query Product($handle: String!) {
-            productByHandle(handle: $handle) {
+         {
+            productByHandle(handle: "${handle}") {
               title
               description
               tags
-              priceRange {
-                minVariantPrice {
-                  amount
+              variants(first: 15) {
+                edges {
+                  node {
+                    id
+                    title
+                    sku
+                    price {
+                        amount
+                    }
+                  }
                 }
               }
               images(first: 1) {
@@ -98,7 +106,8 @@ export async function getProduct(handle) {
               }
             }
           }
-        `, {handle: handle}
+        `
     );
+    console.log(data)
     return data.productByHandle;
 }

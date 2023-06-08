@@ -1,7 +1,11 @@
-import React from 'react';
+"use client"
+
+import { useState } from 'react';
 import { formatPrice } from '@/utils/shopify';
+import ProductForm from './ProductForm';
 
 export default function ProductDetails({product}) {
+  const [variantPrice, setVariantPrice] = useState(product.variants.edges[0].node.price.amount)
   return (
     <div className='max-w-2x1 mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:col-span-3'>
         <div>
@@ -9,16 +13,14 @@ export default function ProductDetails({product}) {
                 {product.title}
             </h1>
         </div>
-        <p className='text-gray-500 mt-6'>{product.description}</p>
-        <div className='mt-10 grid=grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2'>
-            <button
-                type="button"
-                className='w-full bg-gray-900 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-500'
-            >
-                Pay {formatPrice(product.priceRange.minVariantPrice.amount)}
-            </button>
-
+        <div className="text-xl text-palette-primary font-medium py-4 px-1">
+          {formatPrice(variantPrice)}
         </div>
+        <p className='text-gray-500 mt-6'>{product.description}</p>
+        <ProductForm 
+        variants = {product.variants.edges}
+        setVariantPrice = {setVariantPrice}
+        />
     </div>
   )
 }
