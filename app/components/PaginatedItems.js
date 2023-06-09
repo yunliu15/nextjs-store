@@ -38,7 +38,7 @@ export default function PaginatedItems({items, itemsPerPage}) {
   return (
     <>
       {
-      !currentItems? '': currentItems.length > 1? (
+      (!currentItems || !currentItems.length)? 'No product found': currentItems.length > 1? (
         <p>Products {startItem} - {endItem} of {items.length}</p>
       ) : <p> Product 1 of 1 </p>
       

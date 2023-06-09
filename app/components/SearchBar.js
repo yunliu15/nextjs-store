@@ -1,7 +1,9 @@
 'use client'
 
-import { useState,FormEvent } from "react"
-import { useRouter } from "next/navigation"
+import { useState,FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export default function SearchBar() {
     const [search, setSearch] = useState('')
@@ -21,10 +23,13 @@ export default function SearchBar() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="bg-white p-2 w-80 text-xl rounded-xl"
+                className="bg-white px-2 py-1 w-80 rounded-md"
                 placeholder="Search"
             />
-            <button type='submit' className="p-2 text-xl rounded-xl bg-slate-300 ml-2 font-bold">Search</button>
+            <button type='submit' className="p-2 ml-2 text-white">
+                <span className="sr-only">Search</span>
+                <FontAwesomeIcon icon={ faMagnifyingGlass } className="w-4 inline-flex" />
+            </button>
         </label>
     </form>
   )

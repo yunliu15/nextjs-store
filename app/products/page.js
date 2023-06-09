@@ -16,7 +16,12 @@ export default async function Products({searchParams}) {
     
     
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">        
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>
+                {
+                    searchTerm? `Search results for "${searchTerm}":` : 'All Products'
+                }
+            </h1>      
             <PaginatedItems 
              items={products}
              itemsPerPage={itemsPerPage}
