@@ -51,7 +51,7 @@ export function CartProvider({ children }) {
       ])
 
       const response = await createShopifyCheckout(newItem)
-      console.log(response)
+      
       setCheckoutId(response.id)
       setCheckoutUrl(response.webUrl)
       saveLocalData(newItem, response.id, response.webUrl)
@@ -105,7 +105,7 @@ export function CartProvider({ children }) {
   }
 
   return (
-    <CartContext.Provider value={[cart, checkoutUrl, isLoading]}>
+    <CartContext.Provider value={{cart, checkoutUrl, isLoading}}>
       <AddToCartContext.Provider value={addToCart}>
         <UpdateCartQuantityContext.Provider value={updateCartItemQuantity}>
           {children}

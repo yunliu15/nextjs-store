@@ -11,10 +11,10 @@ import { Popover } from '@headlessui/react';
 
 export default function Minicart() {
     const updateCartQuantity = useUpdateCartQuantityContext();
-    const cart = useCartContext()[0];
-    const checkoutUrl = useCartContext()[1];
+    const {cart} = useCartContext();
+    const {checkoutUrl} = useCartContext();
     const subtotal = getCartSubTotal(cart);
-    console.log(cart);
+    
     let numItems = 0
     cart.forEach(item => {
         numItems += item.variantQuantity

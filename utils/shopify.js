@@ -76,6 +76,45 @@ export async function getAllProductsSlugs() {
     return data.products; 
 }
 
+export async function getAllProducts() {
+  const {data} = await storefront(
+  `
+  {products(first: 170) {
+    edges {
+      node {
+        title
+        handle
+        priceRange {
+          minVariantPrice {
+            amount
+          }
+          maxVariantPrice {
+            amount
+          }
+        }
+        variants(first: 15) {
+          edges {
+            node {             
+              availableForSale
+            }
+          }
+        }
+        images(first: 1) {
+          edges {
+            node {
+              url
+              altText
+            }
+          }
+        }
+      }
+    }
+  }}
+  `
+  );
+  return data.products; 
+}
+
 export async function getProduct(handle) {
     const {data} = await storefront(
         `

@@ -7,7 +7,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
   const [variantId, setVariantId] = useState(variants[0].node.id);
   const [quantity, setQuantity] = useState(1);
   const addToCart = useAddToCartContext();
-  const isLoading = useCartContext()[2];
+  const {isLoading} = useCartContext();
 
   const isAvailable = variants.some(v => v.node.availableForSale);
 
