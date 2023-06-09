@@ -10,7 +10,7 @@ export default async function Home() {
       <h1>Store</h1>
 
       <section>
-        <h2>Products</h2>
+        <h2 className='text-center py-4'>Featured Products</h2>
         <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-6">
           {
             products.edges.map((item) => {

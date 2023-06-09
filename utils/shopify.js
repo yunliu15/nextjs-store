@@ -156,3 +156,42 @@ export async function getProduct(handle) {
     );
     return data.productByHandle;
 }
+
+export async function searchProducts(searchTerm) {
+  const {data} = await storefront(
+  `
+  {products(first: 170, query: "${searchTerm}") {
+    edges {
+      node {
+        title
+        handle
+        priceRange {
+          minVariantPrice {
+            amount
+          }
+          maxVariantPrice {
+            amount
+          }
+        }
+        variants(first: 15) {
+          edges {
+            node {             
+              availableForSale
+            }
+          }
+        }
+        images(first: 1) {
+          edges {
+            node {
+              url
+              altText
+            }
+          }
+        }
+      }
+    }
+  }}
+  `
+  );
+  return data.products; 
+}
