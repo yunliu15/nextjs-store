@@ -25,3 +25,20 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+ul[aria-label="Pagination"] {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+ul[aria-label="Pagination"] > li {
+  padding: 0 1rem;
+}
+
+ul[aria-label="Pagination"] > li.selected {
+  color: #005cc5;
+}
+
+ul[aria-label="Pagination"] > li.disabled {
+  display: none;
+}

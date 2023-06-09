@@ -20,9 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <CartProvider>    
         <body className={inter.className}>
-          <nav>
-            <div className='flex items-center justify-between mx-auto max-w-6xl px-6 pb-2 pt-4 md:pt-6'>             
+          <nav className='fixed w-full bg-gray-900 text-white'>
+            <div className='flex items-center justify-between mx-auto max-w-6xl px-6 py-4'>             
               <Link href='/'>SnowBoard Store</Link>
+              <Link href='/products'>Shop All</Link>
               <Minicart />
             </div>
           </nav>

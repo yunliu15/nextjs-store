@@ -15,7 +15,9 @@ export default async function Home() {
           {
             products.edges.map((item) => {
               return (
+                <div key={item.node.handle}>
                 <ProductCard item={item} />
+                </div>
               )
             })
           }

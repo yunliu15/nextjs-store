@@ -45,6 +45,13 @@ export async function getFeaturedProducts() {
               amount
             }
           }
+          variants(first: 15) {
+            edges {
+              node {             
+                availableForSale
+              }
+            }
+          }
           images(first: 1) {
             edges {
               node {

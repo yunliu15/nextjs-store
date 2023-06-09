@@ -15,6 +15,9 @@ module.exports = {
       minWidth: {
         '300': '300px',
       },
+      aspectRatio: {
+        '3/4': '3 / 4',
+      },
     },
   },
   plugins: [],

@@ -45,7 +45,7 @@ export default function Minicart() {
                 </div>
                 </Popover.Button>
 
-                <Popover.Panel className="bg-white absolute z-10 right-0 min-w-300 p-3">
+                <Popover.Panel className="bg-white absolute z-10 right-0 min-w-300 p-3 text-black">
                     <div>
                         Subtotal: {formatPrice(subtotal)}
                     </div>

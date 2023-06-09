@@ -9,7 +9,7 @@ function Items({ currentItems }) {
     <>
       {currentItems?
         currentItems.map((item) => (
-          <div key={item.handle}>
+          <div key={item.node.handle} >
             <ProductCard item={item} />
           </div>
         ))
@@ -44,7 +44,7 @@ export default function PaginatedItems({items, itemsPerPage}) {
       
       }
      
-      <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-6">
+      <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3">
       <Items currentItems={currentItems} />
       </div>
       <ReactPaginate

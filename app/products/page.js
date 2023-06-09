@@ -7,15 +7,11 @@ export default async function Products() {
     const products = await getAllProducts();
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <div>
-            
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">        
             <PaginatedItems 
              items={products.edges}
              itemsPerPage={itemsPerPage}
             />
-            
-            </div>
         </main>
     )
 }
