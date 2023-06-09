@@ -83,7 +83,7 @@ export default function Minicart() {
                                         className=""
                                         onClick={() => updateItem(item.variantId, 0)}
                                         >
-                                        <FontAwesomeIcon icon={faTimes} className="w-8 h-8 text-palette-primary border border-palette-primary p-1 hover:bg-palette-lighter" />
+                                        <FontAwesomeIcon icon={faTimes} className="w-4 h-4 text-palette-primary border border-palette-primary p-1 hover:bg-palette-lighter" />
                                         </button>
                                     </li>
                                 )
