@@ -9,6 +9,8 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
   const addToCart = useAddToCartContext();
   const isLoading = useCartContext()[2];
 
+  const isAvailable = variants.some(v => v.node.availableForSale);
+
   const handleVariantChange = (e) => {
     setVariantId(e);
     const selectedVariant = variants.find(v => v.node.id === e);
@@ -73,30 +75,37 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
             </div>
             )
           }
-      <div className="flex justify-start space-x-2 w-full">
-        <div className="flex flex-col items-start space-y-1 flex-grow-0">
-          <label className="text-gray-500 text-base">Qty.</label>
-          <input
-            type="number"
-            inputMode="numeric"
-            id="quantity"
-            name="quantity"
-            min="1"
-            step="1"
-            value={quantity}
-            onChange={(e) => updateQuantity(e.target.value)}
-            className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
-          />
-        </div>
-        <button
-          className="w-full bg-gray-900 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-500"
-          aria-label="cart-button"
-          onClick={handleAddToCart}
-          disabled={isLoading? true : false}
-        >
-          Add To Cart         
-        </button>
-      </div>
+          {
+            isAvailable? (
+              
+              <div className="flex justify-start space-x-2 w-full">
+              <div className="flex flex-col items-start space-y-1 flex-grow-0">
+                <label className="text-gray-500 text-base">Qty.</label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  step="1"
+                  value={quantity}
+                  onChange={(e) => updateQuantity(e.target.value)}
+                  className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                />
+              </div>
+              <button
+                className="w-full bg-gray-900 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-500"
+                aria-label="cart-button"
+                onClick={handleAddToCart}
+                disabled={isLoading? true : false}
+              >
+                Add To Cart         
+              </button>
+            </div>
+            ) : (
+              <div>Out of Stock</div>
+            )
+          }
       
     </div>
   )

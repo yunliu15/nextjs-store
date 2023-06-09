@@ -21,7 +21,7 @@ export default function Minicart() {
     })
 
     function updateItem(id, quantity) {
-        if (quantity != '' && quantity > 0) {            
+        if (quantity !== '') {            
             updateCartQuantity(id, quantity)
         }
     }
@@ -45,7 +45,7 @@ export default function Minicart() {
                 </div>
                 </Popover.Button>
 
-                <Popover.Panel className="bg-white absolute z-10">
+                <Popover.Panel className="bg-white absolute z-10 right-0 min-w-300 p-3">
                     <div>
                         Subtotal: {formatPrice(subtotal)}
                     </div>
@@ -55,9 +55,20 @@ export default function Minicart() {
                             cart.map((item, index) => {
                                 return (
                                     <li key={index} className='p-2'>
-                                        <h3>{item.productTitle}</h3>
-                                        <p>{item.variantTitle}</p>
-                                        <p>{formatPrice(item.variantPrice)}</p>
+                                        <div className='flex justify-between'>
+                                            <img
+                                                src={item.productImage.url}
+                                                alt={item.productImage.altText}
+                                                height={64}
+                                                width={64}
+                                            />
+                                            <div>
+                                                
+                                                <h3>{item.productTitle}</h3>
+                                                <p>{item.variantTitle}</p>
+                                                <p>{formatPrice(item.variantPrice)}</p>
+                                            </div>
+                                        </div>
                                         <input 
                                         name='qty'
                                         type='number'

@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { CartProvider } from '@/context/Store';
 import Minicart from './components/Minicart';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,8 +20,11 @@ export default function RootLayout({
     <html lang="en">
       <CartProvider>    
         <body className={inter.className}>
-          <nav className='py-4 px-3'>
-            <Minicart />
+          <nav>
+            <div className='flex items-center justify-between mx-auto max-w-6xl px-6 pb-2 pt-4 md:pt-6'>             
+              <Link href='/'>SnowBoard Store</Link>
+              <Minicart />
+            </div>
           </nav>
           {children}
         </body>
