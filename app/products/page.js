@@ -1,10 +1,10 @@
 import React from 'react';
 import { getAllProducts, searchProducts } from '@/utils/shopify';
-import PaginatedItems from '@/app/components/PaginatedItems';
+import FilteredProducts from './components/FilteredProducts';
 
-const itemsPerPage = 9;
+
 export default async function Products({searchParams}) {
-    const searchTerm = searchParams.q;
+    const searchTerm = searchParams.search;
     let products = [];
     if (searchTerm) {
         const productsData = await searchProducts(searchTerm);
@@ -13,19 +13,18 @@ export default async function Products({searchParams}) {
         const productsData = await getAllProducts();
         products = productsData.edges;
     }
-    
+    console.log('products changed~~~~~~~~~~~~~~', searchTerm)
     
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <section className='flex min-h-screen flex-col items-center justify-between p-24'>
             <h1>
                 {
                     searchTerm? `Search results for "${searchTerm}":` : 'All Products'
                 }
-            </h1>      
-            <PaginatedItems 
-             items={products}
-             itemsPerPage={itemsPerPage}
+            </h1>   
+            <FilteredProducts 
+             products={products}
             />
-        </main>
+        </section>
     )
 }

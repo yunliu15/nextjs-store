@@ -13,7 +13,7 @@ export default function SearchBar() {
         e.preventDefault()
         
         setSearch('')
-        router.push(`/products?q=${search}`);
+        router.push(`/products?search=${search}`);
     }
   return (
     <form className="w-50 flex justify-center md:justify-between text-gray-900" 
