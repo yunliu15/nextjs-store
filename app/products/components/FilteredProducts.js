@@ -43,22 +43,44 @@ const filters = [
     }
 ]
 
+const filteredBy = [
+    {
+        title: 'Price',
+        options: []
+    },
+    {
+        title: 'Tags',
+        options: []
+    }
+]
+
 const itemsPerPage = 9;
 export default function FilteredProducts({products}) {
     const [currentFilters, setCurrentFilters] = useState([]);
     let filteredProducts;
     const addFilter = (title, name, value) => {
-        const isDuplicate = currentFilters.some(filter => filter.title === title && filter.value ===value);
-        if (!isDuplicate) {          
-            setCurrentFilters([...currentFilters, {title: title, name: name, value: value}]);
+        const filterGroup = currentFilters.find(f=> f.title === title);
+        if (filterGroup) {
+            const optionExists = filterGroup.options.some(o => o.value === value);
+            if (!optionExists) {
+                const newOptions = [...filterGroup.options, {name: name, value: value}];
+                setCurrentFilters([...currentFilters.filter(f=> f.title !== title), {title: title, options: newOptions} ])
+            }
+        } else {console.log(title, name, value)
+            setCurrentFilters([...currentFilters, {title:title, options: [{name: name, value, value}]}]);
         }
     }
 
     const removeFilter = (title, value) => {
-        console.log(title + value)
-        const newFilters = currentFilters.filter(f => f.title !== title || f.value !==value);
-        console.log(newFilters)
-        setCurrentFilters(newFilters);
+        const filterGroup = currentFilters.find(f=> f.title === title);
+        if (filterGroup) {
+            const newOptions = filterGroup.options.filter(o => o.value !== value);
+            if (newOptions.length) {               
+                setCurrentFilters([...currentFilters.filter(f=> f.title !== title), {title: title, options:newOptions} ]);
+            } else {
+                setCurrentFilters(currentFilters.filter(f=> f.title !== title))
+            }
+        }
     }
 
     const clearAll = () => {
@@ -88,27 +110,23 @@ export default function FilteredProducts({products}) {
 
     const getFilteredProducts = () => {
         let resultProducts = [...products];
-        let uniqueProducts = [];
-        
-        let currentTitle = '';
-        let productsToFilter = [];
-        currentFilters.forEach((filter) => {
-            if (filter.title === currentTitle) {             
-                let p = filterProducts(productsToFilter, filter.title, filter.value);
-                resultProducts = [...resultProducts, ...p];
-            } else {
-                currentTitle = filter.title;
-                productsToFilter = [...resultProducts]
-                resultProducts = filterProducts(productsToFilter, filter.title, filter.value);
+        let productsToFilter = [...products];
+        currentFilters.forEach((filter) => {console.log(filter)
+            let mergedProducts = [];
+            if (filter.options.length) {                
+                filter.options.forEach(option => {
+                    mergedProducts = [...mergedProducts, ...filterProducts(productsToFilter, filter.title, option.value)];
+                })
+                resultProducts = Array.from(new Set(mergedProducts));
+                productsToFilter = [...resultProducts];
             }
-
         })
-        uniqueProducts = Array.from(new Set(resultProducts));
-        return uniqueProducts
+        
+        return resultProducts
     }
     
     if (!currentFilters.length) {
-        filteredProducts= products;
+        filteredProducts = products;
     } else {
         filteredProducts = getFilteredProducts();
     }
@@ -126,13 +144,21 @@ export default function FilteredProducts({products}) {
                                     return (
                                         <li key={index} className='pt-1'>
                                             <span className='font-bold mr-1'>{filter.title}: </span>
-                                            <span>{filter.name}</span>
-                                            <button
-                                            className='ml-2'
-                                            value={filter.value} 
-                                            onClick={e => removeFilter(filter.title, e.target.value)}>
-                                                remove
-                                            </button>
+                                            {
+                                                filter.options.map((o, index) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <span>{o.name}</span>
+                                                            <button
+                                                            className='ml-2'
+                                                            value={o.value} 
+                                                            onClick={e => removeFilter(filter.title, e.target.value)}>
+                                                                remove
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </li>
                                     )
                                 })
