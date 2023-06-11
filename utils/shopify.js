@@ -91,6 +91,7 @@ export async function getAllProducts() {
       node {
         title
         handle
+        tags
         priceRange {
           minVariantPrice {
             amount
@@ -165,6 +166,7 @@ export async function searchProducts(searchTerm) {
       node {
         title
         handle
+        tags
         priceRange {
           minVariantPrice {
             amount
