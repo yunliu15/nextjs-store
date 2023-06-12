@@ -47,7 +47,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
     <div className="w-full">
           
           {
-            variants.length <= 1? '' : (
+            variants.length > 1 && (
               
             <div className="max-w-xs mt-5">
               <label className="text-gray-500 text-base">Color</label>
@@ -56,7 +56,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
                 name="size-selector"
                 onChange={(event) => handleVariantChange(event.target.value)}
                 value={variantId}
-                className="mt-3 mb-3 form-select border border-gray-300 rounded-sm w-full text-gray-900 focus:border-palette-light focus:ring-palette-light"
+                className="p-2 mt-3 mb-3 form-select border border-gray-300 rounded-sm w-full text-gray-900 focus:border-palette-light focus:ring-palette-light"
               >
                 {
                   variants.map(item => (
@@ -78,7 +78,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
           {
             isAvailable? (
               
-              <div className="flex justify-start space-x-2 w-full">
+              <div className="flex justify-start space-x-2 w-full max-w-xs">
               <div className="flex flex-col items-start space-y-1 flex-grow-0">
                 <label className="text-gray-500 text-base">Qty.</label>
                 <input
@@ -90,7 +90,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
                   step="1"
                   value={quantity}
                   onChange={(e) => updateQuantity(e.target.value)}
-                  className="text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
+                  className="py-2 px-3 text-center text-gray-900 form-input border border-gray-300 w-16 rounded-sm focus:border-palette-light focus:ring-palette-light"
                 />
               </div>
               <button
@@ -103,7 +103,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
               </button>
             </div>
             ) : (
-              <div>Out of Stock</div>
+              <div className='text-red-700 font-bold'>Out of Stock</div>
             )
           }
       

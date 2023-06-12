@@ -29,7 +29,7 @@ body {
 
 ul[aria-label="Pagination"] {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem 0;
 }
 ul[aria-label="Pagination"] > li {
@@ -42,4 +42,9 @@ ul[aria-label="Pagination"] > li.selected {
 
 ul[aria-label="Pagination"] > li.disabled {
   display: none;
+}
+
+.minicart-content {
+  max-height: 85vh;
+  overflow: auto;
 }

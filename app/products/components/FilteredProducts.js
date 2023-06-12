@@ -9,6 +9,10 @@ const filters = [
         'title': 'Price',
         'options': [
             {
+                name: 'Less than $100',
+                value: '0-100'
+            },
+            {
                 name: '$100 to $700',
                 value: '100-700'
             },
@@ -43,16 +47,6 @@ const filters = [
     }
 ]
 
-const filteredBy = [
-    {
-        title: 'Price',
-        options: []
-    },
-    {
-        title: 'Tags',
-        options: []
-    }
-]
 
 const itemsPerPage = 9;
 export default function FilteredProducts({products}) {
@@ -132,10 +126,10 @@ export default function FilteredProducts({products}) {
     }
     
     return (
-        <div className="grid md:grid-cols-12 gap-5 p-4 m-2">
+        <div className="width-full grid md:grid-cols-12 gap-5 p-4 m-2">
             <aside className="md:col-span-3 md:pt-0 p-2 border-2">
                 {
-                    currentFilters.length? (
+                    !!currentFilters.length && (
                     <div>
                         <h2 className='uppercase font-bold text-lg py-2'>Filtered By</h2>
                         <ul>
@@ -166,7 +160,7 @@ export default function FilteredProducts({products}) {
                         </ul>
                         <button onClick={clearAll}>Clear All</button>
                     </div>
-                    ) : ''
+                    )
                 }
                 <h2 className='uppercase font-bold text-lg py-2 mt-4'>Shop By</h2>
                 <ul>

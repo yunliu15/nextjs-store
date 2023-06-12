@@ -13,11 +13,10 @@ export default async function Products({searchParams}) {
         const productsData = await getAllProducts();
         products = productsData.edges;
     }
-    console.log('products changed~~~~~~~~~~~~~~', searchTerm)
     
     return (
-        <section className='flex min-h-screen flex-col items-center justify-between p-24'>
-            <h1>
+        <section className='flex min-h-screen flex-col items-center justify-between max-w-7xl m-auto p-4'>
+            <h1 className='text-5xl font-bold'>
                 {
                     searchTerm? `Search results for "${searchTerm}":` : 'All Products'
                 }

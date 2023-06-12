@@ -16,11 +16,11 @@ export default function ProductCard({item}) {
             />
             </div>
             <div className='mt-4 flex items-start justify-between text-base font-medium text-gray-900'>
-            <h3>
+            <h3 className='font-bold'>
                 {product.title}
 
                 {
-                    isAvailable? '' : (<p className='text-red'>Out of Stock</p>)
+                    isAvailable? '' : (<p className='text-red-700'>Out of Stock</p>)
                 }
             </h3>
             <p>{formatPrice(product.priceRange.minVariantPrice.amount)}</p>
