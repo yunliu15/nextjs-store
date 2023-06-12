@@ -6,6 +6,8 @@ const CartContext = createContext()
 const AddToCartContext = createContext()
 const UpdateCartQuantityContext = createContext()
 
+const MessagesContext = createContext([]);
+
 export function useCartContext() {
   return useContext(CartContext)
 }
@@ -18,11 +20,16 @@ export function useUpdateCartQuantityContext() {
   return useContext(UpdateCartQuantityContext)
 }
 
+export function useMessagesContext() {
+  return useContext( MessagesContext)
+}
+
 export function CartProvider({ children }) {
   const [cart, setCart] = useState([])
   const [checkoutId, setCheckoutId] = useState('')
   const [checkoutUrl, setCheckoutUrl] = useState('')
   const [isLoading, setisLoading] = useState(false)
+  const [messages,setMessages] = useState([])
 
   useEffect(() => {
     setLocalData(setCart, setCheckoutId, setCheckoutUrl)
@@ -55,6 +62,7 @@ export function CartProvider({ children }) {
       setCheckoutId(response.id)
       setCheckoutUrl(response.webUrl)
       saveLocalData(newItem, response.id, response.webUrl)
+      
 
     } else {
       let newCart = [...cart]
@@ -79,6 +87,7 @@ export function CartProvider({ children }) {
       await updateShopifyCheckout(newCartWithItem, checkoutId)
       saveLocalData(newCartWithItem, checkoutId, checkoutUrl)
     }
+    setMessages([...messages, {type: 'success', content: `${newItem.productTitle} is added to cart.`}])
     setisLoading(false)
   }
 
@@ -108,7 +117,9 @@ export function CartProvider({ children }) {
     <CartContext.Provider value={{cart, checkoutUrl, isLoading}}>
       <AddToCartContext.Provider value={addToCart}>
         <UpdateCartQuantityContext.Provider value={updateCartItemQuantity}>
+          <MessagesContext.Provider value={{messages, setMessages}}>
           {children}
+          </MessagesContext.Provider>
         </UpdateCartQuantityContext.Provider>
       </AddToCartContext.Provider>
     </CartContext.Provider>

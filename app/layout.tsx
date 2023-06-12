@@ -4,6 +4,7 @@ import { CartProvider } from '@/context/Store';
 import Minicart from './components/Minicart';
 import SearchBar from './components/SearchBar';
 import Link from 'next/link';
+import Messages from './components/Messages';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,9 @@ export default function RootLayout({
               <Minicart />
             </div>
           </nav>
+          <div>
+            <Messages />
+          </div>
           {children}
         </body>
       </CartProvider>
