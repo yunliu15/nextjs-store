@@ -134,14 +134,14 @@ export default function FilteredProducts({products}) {
                         <h2 className='uppercase font-bold text-lg py-2'>Filtered By</h2>
                         <ul>
                             {
-                                currentFilters.map((filter,index) =>{
+                                currentFilters.map((filter) =>{
                                     return (
-                                        <li key={index} className='pt-1'>
+                                        <li key={filter.title} className='pt-1'>
                                             <span className='font-bold mr-1'>{filter.title}: </span>
                                             {
-                                                filter.options.map((o, index) => {
+                                                filter.options.map((o) => {
                                                     return (
-                                                        <div key={index}>
+                                                        <div key={o.name}>
                                                             <span>{o.name}</span>
                                                             <button
                                                             className='ml-2'
@@ -165,14 +165,14 @@ export default function FilteredProducts({products}) {
                 <h2 className='uppercase font-bold text-lg py-2 mt-4'>Shop By</h2>
                 <ul>
                     {
-                        filters.map((filter, index) => {
+                        filters.map((filter) => {
                             return (
-                                <li key={index}>
+                                <li key={filter.title}>
                                     <h3 className='font-bold text-lg py-2'>{filter.title}</h3>
                                     {
-                                        filter.options.map((option, index) => {
+                                        filter.options.map((option) => {
                                             return (
-                                                <div key={index}>
+                                                <div key={option.name}>
                                                     
                                                 {
                                                    <button
