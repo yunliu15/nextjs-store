@@ -15,7 +15,7 @@ export default async function Products({searchParams}) {
     }
     
     return (
-        <section className='flex min-h-screen flex-col items-center justify-between max-w-7xl m-auto p-4'>
+        <section className='flex min-h-screen flex-col items-center justify-start max-w-7xl m-auto p-4'>
             <h1 className='text-5xl font-bold'>
                 {
                     searchTerm? `Search results for "${searchTerm}":` : 'All Products'
