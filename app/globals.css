@@ -13,6 +13,7 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --text-color: #f4f4f4;
   }
 }
 
@@ -61,4 +62,27 @@ ul[aria-label="Pagination"] > li.disabled {
 }
 .messages .note {
   background-color: rgb(254 240 138);
+}
+.hero-image-container {
+  max-height: 800px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.hero-image-container .text-box {
+  left: 10%;
+  top: 25%;
+}
+.hero-image-container .text-box h1 {
+  font-size: clamp(30px, 6vw, 80px);
+    color: #000;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+.hero-image-container .text-box p {
+  color: #fff;
+  font-size: clamp(20px, 4vw, 40px);
+  text-shadow: 2px 6px 6px rgba(0,0,0, 0.8);
+  margin-top: 10px;
 }
