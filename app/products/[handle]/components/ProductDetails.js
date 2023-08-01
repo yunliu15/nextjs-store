@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { formatPrice } from '@/utils/shopify';
 import ProductForm from './ProductForm';
 import ProductGallery from './ProductGallery';
@@ -10,12 +10,28 @@ export default function ProductDetails({product, handle}) {
     price: product.variants.edges[0].node.price.amount,
     imageId: product.variants.edges[0].node.image?.id
   });
+  const images = product?.images?.edges.map(item => {
+    return {
+        url: item.node.url,
+        altText: item.node.altText,
+        original: item.node.url,
+        thumbnail: item.node.url,
+        originalAlt: item.node.altText,
+        id: item.node.id
+    }
+  }) || [];
+
+  
+  const slideRef = useRef();
+  const updateImage = (index) => {
+    slideRef.current?.slideToIndex(index);
+  }
   return (
     <div className='lg:grid lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16'>
             {/* product image */}
             <div className='lg:col-span-4'>
                 <div className='aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden'>
-                    <ProductGallery product={product} currentImageId={currentVariant.imageId} />
+                    <ProductGallery ref={slideRef} images={images} currentImageId={currentVariant.imageId} />
                 </div>
             </div>
 
@@ -36,6 +52,8 @@ export default function ProductDetails({product, handle}) {
               mainImg={product.images.edges[0]?.node}
               variants={product.variants.edges}
               setCurrentVariant={setCurrentVariant}
+              updateImage={updateImage}
+              images={images}
               />
           </div>
         </div>

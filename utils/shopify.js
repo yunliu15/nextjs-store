@@ -143,6 +143,7 @@ export async function getProduct(handle) {
                     image {
                       url
                     	altText
+                      id
                     }
                   }
                 }
@@ -152,6 +153,7 @@ export async function getProduct(handle) {
                   node {
                     url
                     altText
+                    id
                   }
                 }
               }

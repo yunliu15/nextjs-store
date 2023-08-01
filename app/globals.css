@@ -28,6 +28,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
 
 ul[aria-label="Pagination"] {
   display: flex;

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useCartContext, useAddToCartContext } from '@/context/Store';
 
-function ProductForm({ title, handle, mainImg, variants, setCurrentVariant }) {
+function ProductForm({ title, handle, mainImg, variants, setCurrentVariant, updateImage, images }) {
   const [variantId, setVariantId] = useState(variants[0].node.id);
   const [quantity, setQuantity] = useState(1);
   const addToCart = useAddToCartContext();
@@ -17,7 +17,13 @@ function ProductForm({ title, handle, mainImg, variants, setCurrentVariant }) {
     setCurrentVariant({
       price: selectedVariant.node.price.amount,
       imageId: selectedVariant.node.image?.id
+    });
+
+    let currentIndex =  0;
+    images.forEach((img, index) => {
+      if (img.id === selectedVariant.node.image?.id) currentIndex = index;
     })
+    updateImage(currentIndex);
   }
  
   const updateQuantity = (qty) => {
