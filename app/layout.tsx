@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <CartProvider>    
         <body className={inter.className}>
-          <nav className='fixed w-full bg-gray-900 text-white top-0'>
+          <nav className='fixed w-full bg-gray-900 text-white top-0 z-50'>
             <div className='flex items-center justify-between mx-auto max-w-6xl px-6 py-4'>             
               <Link href='/'>SnowBoard Store</Link>
               <Link href='/products'>Shop All</Link>

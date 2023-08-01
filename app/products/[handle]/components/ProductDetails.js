@@ -3,27 +3,42 @@
 import { useState } from 'react';
 import { formatPrice } from '@/utils/shopify';
 import ProductForm from './ProductForm';
+import ProductGallery from './ProductGallery';
 
 export default function ProductDetails({product, handle}) {
-  const [variantPrice, setVariantPrice] = useState(product.variants.edges[0].node.price.amount)
+  const [currentVariant, setCurrentVariant] = useState({
+    price: product.variants.edges[0].node.price.amount,
+    imageId: product.variants.edges[0].node.image?.id
+  });
   return (
-    <div className='max-w-2x1 mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:col-span-3'>
-        <div>
-            <h1 className='text-2x1 font-extrabold tracking-tight text-gray-900 sm:text-3x1'>
-                {product.title}
-            </h1>
+    <div className='lg:grid lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16'>
+            {/* product image */}
+            <div className='lg:col-span-4'>
+                <div className='aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden'>
+                    <ProductGallery product={product} currentImageId={currentVariant.imageId} />
+                </div>
+            </div>
+
+            {/* product details */}
+            <div className='max-w-2x1 mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:col-span-3'>
+              <div>
+                  <h1 className='text-2x1 font-extrabold tracking-tight text-gray-900 dark:text-slate-50 sm:text-3x1'>
+                      {product.title}
+                  </h1>
+              </div>
+              <div className="text-xl text-palette-primary font-medium py-4 px-1">
+                {formatPrice(currentVariant.price)}
+              </div>
+              <p className='text-gray-500 dark:text-slate-50 mt-6'>{product.description}</p>
+              <ProductForm
+              title={product.title}
+              handle={handle}
+              mainImg={product.images.edges[0]?.node}
+              variants={product.variants.edges}
+              setCurrentVariant={setCurrentVariant}
+              />
+          </div>
         </div>
-        <div className="text-xl text-palette-primary font-medium py-4 px-1">
-          {formatPrice(variantPrice)}
-        </div>
-        <p className='text-gray-500 mt-6'>{product.description}</p>
-        <ProductForm
-        title={product.title}
-        handle={handle}
-        mainImg={product.images.edges[0]?.node}
-        variants={product.variants.edges}
-        setVariantPrice={setVariantPrice}
-        />
-    </div>
+    
   )
 }

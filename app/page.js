@@ -1,4 +1,4 @@
-import { getFeaturedProducts, formatPrice } from '../utils/shopify';
+import { getFeaturedProducts } from '../utils/shopify';
 import Link from 'next/link';
 import ProductCard from './components/ProductCard';
 import Image from 'next/image';

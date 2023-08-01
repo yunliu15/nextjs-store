@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useCartContext, useAddToCartContext } from '@/context/Store';
 
-function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
+function ProductForm({ title, handle, mainImg, variants, setCurrentVariant }) {
   const [variantId, setVariantId] = useState(variants[0].node.id);
   const [quantity, setQuantity] = useState(1);
   const addToCart = useAddToCartContext();
@@ -14,7 +14,10 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
   const handleVariantChange = (e) => {
     setVariantId(e);
     const selectedVariant = variants.find(v => v.node.id === e);
-    setVariantPrice(selectedVariant.node.price.amount);
+    setCurrentVariant({
+      price: selectedVariant.node.price.amount,
+      imageId: selectedVariant.node.image?.id
+    })
   }
  
   const updateQuantity = (qty) => {
@@ -50,7 +53,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
             variants.length > 1 && (
               
             <div className="max-w-xs mt-5">
-              <label className="text-gray-500 text-base">Color</label>
+              <label className="text-gray-500 dark:text-slate-50 text-base">Color</label>
               <select
                 id="size-selector"
                 name="size-selector"
@@ -80,7 +83,7 @@ function ProductForm({ title, handle, mainImg, variants, setVariantPrice }) {
               
               <div className="flex justify-start space-x-2 w-full max-w-xs">
               <div className="flex flex-col items-start space-y-1 flex-grow-0">
-                <label className="text-gray-500 text-base">Qty.</label>
+                <label className="text-gray-500 dark:text-slate-50 text-base">Qty.</label>
                 <input
                   type="number"
                   inputMode="numeric"

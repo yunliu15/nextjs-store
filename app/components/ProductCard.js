@@ -15,7 +15,7 @@ export default function ProductCard({item}) {
                 className="h-full m-auto abject-center abject-cover group-hover:opacity-75"
             />
             </div>
-            <div className='mt-4 flex items-start justify-between text-base font-medium text-gray-900 dark:text-slate-400'>
+            <div className='mt-4 flex items-start justify-between text-base font-medium text-gray-900 dark:text-slate-50'>
             <h3 className='font-bold'>
                 {product.title}
 

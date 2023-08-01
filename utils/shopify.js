@@ -140,10 +140,14 @@ export async function getProduct(handle) {
                     price {
                         amount
                     }
+                    image {
+                      url
+                    	altText
+                    }
                   }
                 }
               }
-              images(first: 1) {
+              images(first: 15) {
                 edges {
                   node {
                     url
