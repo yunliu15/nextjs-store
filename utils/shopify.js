@@ -233,3 +233,19 @@ export async function getMenu(handle) {
     })) || []
   );
 }
+
+export async function getCustomer(token) {
+  const { data } = await storefrontFetch(
+    `
+    {
+      customer(customerAccessToken: "${token}") {
+        firstName
+        lastName
+        email
+        phone
+      }
+    }
+    `
+  );
+  return data.customer;
+}

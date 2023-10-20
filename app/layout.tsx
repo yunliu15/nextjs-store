@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar';
 import Link from 'next/link';
 import Messages from './components/Messages';
 import Nav from './components/Nav'
+import {CustomerProvider} from '@/hooks/useCustomer'
 
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
@@ -20,21 +21,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <CartProvider>    
-        <body className={inter.className}>
-          <nav className='fixed w-full bg-gray-900 text-white top-0 z-50'>
-            <div className='flex items-center justify-between mx-auto max-w-6xl px-6 py-4'>             
-              <Nav />
-              <SearchBar />
-              <Minicart />
+      <CustomerProvider>
+        <CartProvider>    
+          <body className={inter.className}>
+            <nav className='fixed w-full bg-gray-900 text-white top-0 z-50'>
+              <div className='flex items-center justify-between mx-auto max-w-6xl px-6 py-4'>             
+                <Nav />
+                <SearchBar />
+                <Minicart />
+              </div>
+            </nav>
+            <div>
+              <Messages />
             </div>
-          </nav>
-          <div>
-            <Messages />
-          </div>
-          {children}
-        </body>
-      </CartProvider>
+            {children}
+          </body>
+        </CartProvider>
+      </CustomerProvider>
     </html>
   )
 }
