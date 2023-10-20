@@ -1,38 +1,42 @@
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
-const storefrontAccessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN
+import { ensureStartsWith } from "./store-helpers";
 
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const storefrontAccessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
+const domain = process.env.SHOPIFY_STORE_DOMAIN
+  ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")
+  : "";
 export async function storefront(query, variables = {}) {
-    try {        
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-            },
-            body: JSON.stringify({query, variables})
-        })
-        
-        return response.json();
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": storefrontAccessToken,
+      },
+      body: JSON.stringify({ query, variables }),
+    });
 
-    } catch (err) {
-        console.log(err.message);
-        throw new Error('err.message');
-    }
+    return response.json();
+  } catch (err) {
+    console.log(err.message);
+    throw new Error("err.message");
+  }
 }
 
 export function formatPrice(number) {
-    return Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFractionDigits: 2}).format(number);
+  return Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  }).format(number);
 }
 
 export async function getFeaturedProducts() {
-    const {data} = await storefront(featuredProductsQuery);
-    return data.products
-  }
-  
-  
-  
-  const featuredProductsQuery = `
+  const { data } = await storefront(featuredProductsQuery);
+  return data.products;
+}
+
+const featuredProductsQuery = `
   query Products {
     products(first: 6) {
       edges {
@@ -64,11 +68,11 @@ export async function getFeaturedProducts() {
       }
     }
   }
-  `
+  `;
 
 export async function getAllProductsSlugs() {
-    const {data} = await storefront(
-        `
+  const { data } = await storefront(
+    `
         query Products{
             products(first: 17) {
                 edges {
@@ -79,13 +83,13 @@ export async function getAllProductsSlugs() {
             }
         }
         `
-    );
-    return data.products; 
+  );
+  return data.products;
 }
 
 export async function getAllProducts() {
-  const {data} = await storefront(
-  `
+  const { data } = await storefront(
+    `
   {products(first: 170) {
     edges {
       node {
@@ -120,12 +124,12 @@ export async function getAllProducts() {
   }}
   `
   );
-  return data.products; 
+  return data.products;
 }
 
 export async function getProduct(handle) {
-    const {data} = await storefront(
-        `
+  const { data } = await storefront(
+    `
          {
             productByHandle(handle: "${handle}") {
               title
@@ -160,13 +164,13 @@ export async function getProduct(handle) {
             }
           }
         `
-    );
-    return data.productByHandle;
+  );
+  return data.productByHandle;
 }
 
 export async function searchProducts(searchTerm) {
-  const {data} = await storefront(
-  `
+  const { data } = await storefront(
+    `
   {products(first: 170, query: "${searchTerm}") {
     edges {
       node {
@@ -201,5 +205,31 @@ export async function searchProducts(searchTerm) {
   }}
   `
   );
-  return data.products; 
+  return data.products;
+}
+
+export async function getMenu(handle) {
+  const { data } = await storefront(
+    `
+    {
+      menu(handle: "${handle}") {
+        items {
+          title
+          url
+        }
+      }
+    }
+    `
+  );
+
+  return (
+    data?.menu?.items.map((item) => ({
+      title: item.title,
+      path: item.url
+        .replace(domain, "")
+        .replace("/collections", "/products")
+        .replace("/pages", "")
+        .replace(/\/all$/, ""),
+    })) || []
+  );
 }

@@ -3,6 +3,7 @@
 import * as React from "react";
 import ImageGallery from "react-image-gallery";
 
+// eslint-disable-next-line react/display-name
 const ProductGallery = React.forwardRef(({images}, ref) => {
     return ( 
         <>
