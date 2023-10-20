@@ -5,7 +5,7 @@ const storefrontAccessToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, "https://")
   : "";
-export async function storefront(query, variables = {}) {
+export async function storefrontFetch(query, variables = {}) {
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -32,7 +32,7 @@ export function formatPrice(number) {
 }
 
 export async function getFeaturedProducts() {
-  const { data } = await storefront(featuredProductsQuery);
+  const { data } = await storefrontFetch(featuredProductsQuery);
   return data.products;
 }
 
@@ -71,7 +71,7 @@ const featuredProductsQuery = `
   `;
 
 export async function getAllProductsSlugs() {
-  const { data } = await storefront(
+  const { data } = await storefrontFetch(
     `
         query Products{
             products(first: 17) {
@@ -88,7 +88,7 @@ export async function getAllProductsSlugs() {
 }
 
 export async function getAllProducts() {
-  const { data } = await storefront(
+  const { data } = await storefrontFetch(
     `
   {products(first: 170) {
     edges {
@@ -128,7 +128,7 @@ export async function getAllProducts() {
 }
 
 export async function getProduct(handle) {
-  const { data } = await storefront(
+  const { data } = await storefrontFetch(
     `
          {
             productByHandle(handle: "${handle}") {
@@ -169,7 +169,7 @@ export async function getProduct(handle) {
 }
 
 export async function searchProducts(searchTerm) {
-  const { data } = await storefront(
+  const { data } = await storefrontFetch(
     `
   {products(first: 170, query: "${searchTerm}") {
     edges {
@@ -209,7 +209,7 @@ export async function searchProducts(searchTerm) {
 }
 
 export async function getMenu(handle) {
-  const { data } = await storefront(
+  const { data } = await storefrontFetch(
     `
     {
       menu(handle: "${handle}") {
