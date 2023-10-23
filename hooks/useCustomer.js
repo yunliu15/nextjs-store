@@ -36,6 +36,7 @@ const useCustomerData = () => {
   }, []);
 
   useEffect(() => {
+    console.log("gettoken!!!!!");
     const getCustomerToken = () => {
       const customerToken = Cookies.get("nextjs-store.access_token") || "";
       if (customerToken) {
@@ -46,11 +47,10 @@ const useCustomerData = () => {
   }, []);
 
   useEffect(() => {
-    const getCustomer = async () => {
+    const fetchCustomer = async () => {
       try {
         setIsLoading(true);
-        const customer = await getCustomer(newtoken);
-
+        const customer = await getCustomer(token);
         if (customer) {
           setCustomer(customer);
         } else {
@@ -63,20 +63,17 @@ const useCustomerData = () => {
       }
     };
     if (token) {
-      getCustomer();
+      fetchCustomer();
     }
   }, [token]);
 
-  return useMemo(
-    () => ({
-      customer,
-      refresh,
-      token,
-      isLoading,
-      resetToken,
-    }),
-    [customer, refresh, token, isLoading, resetToken]
-  );
+  return {
+    customer,
+    refresh,
+    token,
+    isLoading,
+    resetToken,
+  };
 };
 
 const { Provider: CustomerProvider, useContextHook: useCustomerContext } =

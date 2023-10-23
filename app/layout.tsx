@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { CartProvider } from '@/context/Store';
 import Minicart from './components/Minicart';
 import SearchBar from './components/SearchBar';
+import HeaderAccount from './components/HeaderAccount'
 import Link from 'next/link';
 import Messages from './components/Messages';
 import Nav from './components/Nav'
@@ -28,6 +29,7 @@ export default function RootLayout({
               <div className='flex items-center justify-between mx-auto max-w-6xl px-6 py-4'>             
                 <Nav />
                 <SearchBar />
+                <HeaderAccount />
                 <Minicart />
               </div>
             </nav>
