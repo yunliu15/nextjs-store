@@ -235,7 +235,6 @@ export async function getMenu(handle) {
 }
 
 export async function getCustomer(token) {
-  console.log("calling getcustomer~~~");
   const { data } = await storefrontFetch(
     `
     {
@@ -272,21 +271,39 @@ export async function createAccessToken(input) {
   return data.customerAccessTokenCreate;
 }
 
-export async function createAccount(input) {
+export async function deleteAccessToken(token) {
   const { data } = await storefrontFetch(
     `
-    mutation {
-      customerCreate(input: "${input}") {
-        customerUserErrors {
-          code
+    mutation customerAccessTokenDelete($customerAccessToken: String!) {
+      customerAccessTokenDelete(customerAccessToken: $token) {
+        deletedAccessToken
+        deletedCustomerAccessTokenId
+        userErrors {
           field
           message
         }
+      }
+    }
+    `,
+    token
+  );
+  return data;
+}
+
+export async function createAccount(input) {
+  const { data } = await storefrontFetch(
+    `
+    mutation customerCreate($input: CustomerCreateInput!) {
+      customerCreate(input: $input) {
         customer {
-          id
+          # Customer fields
+        }
+        customerUserErrors {
+          # CustomerUserError fields
         }
       }
-    }`
+    }`,
+    input
   );
   return data.customerCreate;
 }

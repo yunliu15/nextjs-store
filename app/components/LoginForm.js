@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 import { Button, Input } from "./ui";
 import { useCustomerContext } from "@/hooks/useCustomer";
@@ -15,6 +16,8 @@ const LoginForm = () => {
   const [disabled, setDisabled] = useState(false);
   const [isShown, setIsShown] = useState(false);
   const { refresh } = useCustomerContext();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -39,7 +42,6 @@ const LoginForm = () => {
       };
       try {
         const result = await createAccessToken(formInput);
-        console.log(result);
         if (result && result.customerAccessToken) {
           Cookies.set(
             "nextjs-store.access_token",
@@ -51,6 +53,7 @@ const LoginForm = () => {
           );
         }
         refresh();
+        router.replace("/");
       } catch (e) {
         console.error(e);
       }

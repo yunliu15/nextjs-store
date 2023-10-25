@@ -2,7 +2,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import { getCustomer } from "@/utils/shopify";
+import { getCustomer, deleteAccessToken } from "@/utils/shopify";
 import { createDefaultContext } from "@/utils/context";
 
 const useCustomerData = () => {
@@ -35,8 +35,12 @@ const useCustomerData = () => {
     Cookies.remove("nextjs-store.refresh_token");
   }, []);
 
+  const logout = useCallback(async () => {
+    resetToken();
+    setCustomer(null);
+  }, [resetToken]);
+
   useEffect(() => {
-    console.log("gettoken!!!!!");
     const getCustomerToken = () => {
       const customerToken = Cookies.get("nextjs-store.access_token") || "";
       if (customerToken) {
@@ -67,13 +71,17 @@ const useCustomerData = () => {
     }
   }, [token]);
 
-  return {
-    customer,
-    refresh,
-    token,
-    isLoading,
-    resetToken,
-  };
+  return useMemo(
+    () => ({
+      customer,
+      refresh,
+      token,
+      isLoading,
+      resetToken,
+      logout,
+    }),
+    [customer, refresh, token, isLoading, resetToken, logout]
+  );
 };
 
 const { Provider: CustomerProvider, useContextHook: useCustomerContext } =
