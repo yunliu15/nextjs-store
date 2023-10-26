@@ -43,13 +43,12 @@ const LoginForm = () => {
       try {
         const result = await createAccessToken(formInput);
         if (result && result.customerAccessToken) {
+          const expiresAt = result.customerAccessToken.expiresAt;
+          const epxires = expiresAt ? new Date(expiresAt) : "30";
           Cookies.set(
             "nextjs-store.access_token",
-            result.customerAccessToken.accessToken || ""
-          );
-          Cookies.set(
-            "nextjs-store.refresh_token",
-            result.customerAccessToken.refreshToken || ""
+            result.customerAccessToken.accessToken || "",
+            { expires: epxires }
           );
         }
         refresh();

@@ -32,7 +32,6 @@ const useCustomerData = () => {
 
   const resetToken = useCallback(() => {
     Cookies.remove("nextjs-store.access_token");
-    Cookies.remove("nextjs-store.refresh_token");
   }, []);
 
   const logout = useCallback(async () => {
