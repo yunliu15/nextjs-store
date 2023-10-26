@@ -295,11 +295,13 @@ export async function createAccount(input) {
     `
     mutation customerCreate($input: CustomerCreateInput!) {
       customerCreate(input: $input) {
-        customer {
-          # Customer fields
-        }
         customerUserErrors {
-          # CustomerUserError fields
+          code
+          field
+          message
+        }
+        customer {
+          id
         }
       }
     }`,
